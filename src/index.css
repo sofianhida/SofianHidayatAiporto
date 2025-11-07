@@ -1,0 +1,532 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 260 100% 99%;
+    --foreground: 260 10% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 260 10% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 260 10% 10%;
+
+    --primary: 260 80% 74%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 260 20% 96%;
+    --secondary-foreground: 260 10% 10%;
+
+    --muted: 260 10% 96%;
+    --muted-foreground: 260 10% 40%;
+
+    --accent: 260 40% 96%;
+    --accent-foreground: 260 10% 10%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 260 20% 92%;
+    --input: 260 20% 92%;
+    --ring: 260 80% 74%;
+
+    --radius: 0.75rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+    @apply overflow-x-hidden;
+    /* Removed cursor: none; */
+  }
+
+  a, button, [role="button"] {
+    /* Removed cursor: none; */
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/50 backdrop-blur-lg border border-white/30 shadow-soft;
+  }
+  
+  .glass-dark {
+    @apply bg-gray-900/60 backdrop-blur-lg border border-white/10 shadow-soft;
+  }
+  
+  .glass-card {
+    @apply glass rounded-xl p-6 transition-all duration-300 hover:shadow-glow;
+  }
+  
+  .btn-primary {
+    @apply bg-purple text-white px-6 py-3 rounded-full font-medium transition-all 
+           hover:shadow-glow hover:bg-purple-dark active:scale-95 
+           disabled:opacity-70 disabled:cursor-not-allowed;
+  }
+  
+  .btn-outline {
+    @apply border border-purple text-purple bg-transparent px-6 py-3 rounded-full font-medium 
+           transition-all hover:bg-purple/10 active:scale-95
+           disabled:opacity-70 disabled:cursor-not-allowed;
+  }
+  
+  .btn-glow {
+    @apply relative bg-purple text-white px-6 py-3 rounded-full font-medium
+           transition-all overflow-hidden hover:shadow-glow active:scale-95;
+  }
+  
+  .btn-glow::after {
+    @apply content-[''] absolute inset-0 bg-white/20 scale-x-0 
+           transition-transform duration-500 origin-left;
+  }
+  
+  .btn-glow:hover::after {
+    @apply scale-x-100;
+  }
+  
+  .card-3d {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  
+  .card-3d:hover {
+    transform: translateY(-10px) rotateX(10deg) rotateY(10deg);
+  }
+  
+  .shiny-border {
+    @apply relative rounded-xl overflow-hidden;
+  }
+  
+  .shiny-border::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, 
+      rgba(155, 135, 245, 0) 0%, 
+      rgba(155, 135, 245, 0.5) 50%, 
+      rgba(155, 135, 245, 0) 100%);
+    z-index: -1;
+    background-size: 200% 200%;
+    animation: shine 3s linear infinite;
+    border-radius: inherit;
+  }
+  
+  @keyframes shine {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 200% 200%; }
+  }
+  
+  .gradient-text {
+    @apply font-bold;
+    background: linear-gradient(90deg, #9b87f5, #7E69AB, #b29ef5, #9b87f5);
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+    animation: gradient-text 8s ease infinite;
+  }
+  
+  @keyframes gradient-text {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  .animate-pulse-light {
+    animation: pulse-light 3s infinite;
+  }
+  
+  @keyframes pulse-light {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.6;
+    }
+  }
+  
+  .section {
+    @apply py-20 px-4 sm:px-6 md:px-8 lg:px-12 max-w-7xl mx-auto;
+  }
+  
+  .section-title {
+    @apply text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-6 text-center;
+  }
+  
+  .section-subtitle {
+    @apply text-muted-foreground text-lg md:text-xl mb-12 text-center max-w-3xl mx-auto;
+  }
+  
+  .feature-card {
+    @apply glass-card p-6 flex flex-col items-center text-center gap-4
+           opacity-0 translate-y-8 animate-fade-in;
+  }
+  
+  .nav-link {
+    @apply relative text-foreground/80 hover:text-foreground transition-colors py-2
+           after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5
+           after:bg-purple after:origin-center after:scale-x-0 after:transition-transform
+           hover:after:scale-x-100;
+  }
+  
+  .tilt-card {
+    @apply transform transition duration-300;
+  }
+  
+  .tilt-card:hover {
+    @apply shadow-glow;
+    transform: perspective(1500px) rotateX(2deg) rotateY(2deg);
+  }
+
+  .animate-delay-100 {
+    animation-delay: 100ms;
+  }
+  
+  .animate-delay-200 {
+    animation-delay: 200ms;
+  }
+  
+  .animate-delay-300 {
+    animation-delay: 300ms;
+  }
+  
+  .animate-delay-400 {
+    animation-delay: 400ms;
+  }
+  
+  .animate-delay-500 {
+    animation-delay: 500ms;
+  }
+
+  .animated-card {
+    @apply transition-all duration-300 hover:shadow-glow border border-transparent hover:border-purple/20 hover:-translate-y-1;
+  }
+  
+  .pulsing-card {
+    @apply relative overflow-hidden;
+  }
+  
+  .pulsing-card::after {
+    @apply content-[''] absolute inset-0 bg-white/20 opacity-0 transition-opacity duration-500;
+  }
+  
+  .pulsing-card:hover::after {
+    @apply opacity-100 animate-pulse;
+  }
+  
+  .ai-system-card {
+    @apply relative overflow-hidden rounded-xl flex items-start p-5 gap-4
+           border border-transparent bg-white hover:border-purple/30
+           transition-all duration-300 hover:shadow-xl hover:-translate-y-1
+           bg-gradient-to-br from-white to-gray-50;
+  }
+  
+  .fancy-badge {
+    @apply px-3 py-1 text-xs font-medium rounded-full
+           bg-gradient-to-r from-purple/80 to-purple-dark/80 text-white
+           shadow-sm;
+  }
+  
+  .animated-icon {
+    @apply flex items-center justify-center w-12 h-12 rounded-lg
+           bg-gradient-to-br from-purple/20 to-purple/10
+           text-purple transition-transform duration-300
+           hover:scale-110 border border-purple/20;
+  }
+
+  .underline-animation {
+    @apply relative inline-block;
+  }
+  
+  .underline-animation::after {
+    @apply content-[''] absolute w-full h-0.5 bg-purple left-0 bottom-0
+           origin-bottom-right scale-x-0 transition-transform duration-300;
+  }
+  
+  .underline-animation:hover::after {
+    @apply origin-bottom-left scale-x-100;
+  }
+  
+  .ai-systems-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5;
+  }
+  
+  .ai-dashboard-section {
+    @apply relative py-16 overflow-hidden bg-gradient-to-br from-white via-purple/5 to-white;
+  }
+  
+  .ai-dashboard-section::before {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(155, 135, 245, 0.15) 0%, rgba(155, 135, 245, 0) 70%);
+    top: -100px;
+    left: -100px;
+    border-radius: 50%;
+    z-index: 0;
+  }
+  
+  .ai-dashboard-section::after {
+    content: '';
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, rgba(155, 135, 245, 0.1) 0%, rgba(155, 135, 245, 0) 70%);
+    bottom: -50px;
+    right: -50px;
+    border-radius: 50%;
+    z-index: 0;
+  }
+  
+  .ai-dashboard-content {
+    @apply relative z-10;
+  }
+  
+  .ai-chat-container {
+    @apply rounded-xl overflow-hidden border border-purple/20 shadow-lg bg-white backdrop-blur-sm;
+  }
+  
+  .ai-chat-header {
+    @apply p-4 bg-gradient-to-r from-purple to-purple-dark text-white font-medium flex items-center justify-between;
+  }
+  
+  .ai-chat-messages {
+    @apply p-4 max-h-[400px] overflow-y-auto bg-gradient-to-b from-white to-gray-50;
+  }
+  
+  .ai-chat-input {
+    @apply p-4 border-t border-gray-100 bg-white;
+  }
+  
+  .btn-animated {
+    @apply relative overflow-hidden rounded-full px-5 py-2.5 bg-purple text-white
+           transition-all duration-300 hover:shadow-glow hover:bg-purple-dark;
+  }
+  
+  .btn-animated::after {
+    @apply content-[''] absolute inset-0 bg-white/20 scale-x-0 opacity-0
+           transition-all duration-500 origin-left;
+  }
+  
+  .btn-animated:hover::after {
+    @apply scale-x-100 opacity-100;
+  }
+  
+  .typing-animation::after {
+    content: '|';
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  .liquid-button {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .liquid-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(155, 135, 245, 0.3);
+    border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+    transform: translate(-100%, 0) rotate(0);
+    transition: all 0.8s ease;
+    z-index: -1;
+  }
+
+  .liquid-button:hover::before {
+    transform: translate(0, 0) rotate(45deg);
+    border-radius: 40% 60% 70% 30% / 40% 40% 60% 50%;
+  }
+
+  .gooey {
+    filter: url('#gooey');
+  }
+
+  .glitch {
+    position: relative;
+  }
+
+  .glitch::before,
+  .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .glitch::before {
+    left: 2px;
+    text-shadow: -1px 0 #ff00c1;
+    clip: rect(44px, 450px, 56px, 0);
+    animation: glitch-anim 5s infinite linear alternate-reverse;
+  }
+
+  .glitch::after {
+    left: -2px;
+    text-shadow: -1px 0 #00fff9;
+    clip: rect(44px, 450px, 56px, 0);
+    animation: glitch-anim2 5s infinite linear alternate-reverse;
+  }
+
+  @keyframes glitch-anim {
+    0% {
+      clip: rect(31px, 9999px, 94px, 0);
+    }
+    4.166666667% {
+      clip: rect(91px, 9999px, 43px, 0);
+    }
+    8.333333333% {
+      clip: rect(21px, 9999px, 73px, 0);
+    }
+    95.833333333% {
+      clip: rect(5px, 9999px, 57px, 0);
+    }
+    100% {
+      clip: rect(23px, 9999px, 94px, 0);
+    }
+  }
+
+  @keyframes glitch-anim2 {
+    0% {
+      clip: rect(65px, 9999px, 119px, 0);
+    }
+    4.166666667% {
+      clip: rect(142px, 9999px, 28px, 0);
+    }
+    8.333333333% {
+      clip: rect(63px, 9999px, 51px, 0);
+    }
+    95.833333333% {
+      clip: rect(82px, 9999px, 41px, 0);
+    }
+    100% {
+      clip: rect(128px, 9999px, 92px, 0);
+    }
+  }
+}
+
+.arrow-down {
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes slow-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-slow-rotate {
+  animation: slow-rotate 12s linear infinite;
+}
+
+.particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(155, 135, 245, 0.2);
+  animation: float-particle 15s infinite ease-in-out;
+}
+
+@keyframes float-particle {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(50px, -50px);
+  }
+  50% {
+    transform: translate(100px, 0);
+  }
+  75% {
+    transform: translate(50px, 50px);
+  }
+}
+
+.hero-gradient {
+  background: linear-gradient(135deg, #b29ef5 0%, #9b87f5 50%, #7E69AB 100%);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #9b87f5;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #7E69AB;
+}
